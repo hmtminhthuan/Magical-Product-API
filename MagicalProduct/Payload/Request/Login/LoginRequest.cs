@@ -2,7 +2,7 @@
 
 namespace MagicalProduct.API.Payload.Request;
 
-public class LoginRequest
+public class ProductRequest
 {
 	[Required(ErrorMessage = "Email is required")]
 	[MaxLength(50, ErrorMessage = "Email's max length is 50 characters")]

@@ -19,7 +19,7 @@ namespace MagicalProduct.API.Services.Implements
         {
         }
 
-        public async Task<BasicResponse> Login(LoginRequest loginRequest)
+        public async Task<BasicResponse> Login(ProductRequest loginRequest)
         {
             var loginAccount = _unitOfWork.UserRepository
                 .Get(filter: account => account.Email.Equals(loginRequest.Email)
