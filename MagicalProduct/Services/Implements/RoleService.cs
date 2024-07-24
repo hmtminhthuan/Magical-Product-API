@@ -9,8 +9,7 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class RoleService : BaseService<RoleService>, IRoleService
     {
-        public RoleService(IUnitOfWork unitOfWork, ILogger<RoleService> logger, IMapper mapper,
-            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        public RoleService(IUnitOfWork unitOfWork, ILogger<RoleService> logger) : base(unitOfWork, logger)
         {
         }
         public async Task<BasicResponse> GetAllRolesAsync()
@@ -59,8 +58,11 @@ namespace MagicalProduct.API.Services.Implements
 
         public async Task<BasicResponse> CreateRoleAsync(CreateRoleRequest createRoleRequest)
         {
+            var lastItem = _unitOfWork.RoleRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                .FirstOrDefault();
             var newRole = new Role
             {
+                Id = lastItem == null ? 1 : lastItem.Id + 1,
                 Name = createRoleRequest.Name
             };
 

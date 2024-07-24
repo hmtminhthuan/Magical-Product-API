@@ -8,47 +8,47 @@ namespace MagicalProduct.API.Payload.Request
 {
     public class CreateOrderRequest
     {
-        [FromForm(Name = "user-id")]
+        [JsonPropertyName("user-id")]
         [Required(ErrorMessage = "User Id is required")]
         public string UserId { get; set; }
 
-        [FromForm(Name = "total-amount")]
+        [JsonPropertyName("total-amount")]
         [Required(ErrorMessage = "Total Amount is required")]
         public decimal TotalAmount { get; set; }
 
-        [FromForm(Name = "address")]
+        [JsonPropertyName("address")]
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
-        [FromForm(Name = "payment-method-id")]
+        [JsonPropertyName("payment-method-id")]
         public int PaymentMethodId { get; set; }
 
-        [FromForm(Name = "order-details")]
+        [JsonPropertyName("order-details")]
         public ICollection<CreateOrderDetailRequest> OrderDetails { get; set; }
     }
 
     public class UpdateOrderRequest
     {
-        [FromForm(Name = "id")]
+        [JsonPropertyName("id")]
         [Required(ErrorMessage = "Order Id is required")]
         public int Id { get; set; }
 
-        [FromForm(Name = "user-id")]
+        [JsonPropertyName("user-id")]
         [Required(ErrorMessage = "User Id is required")]
         public string UserId { get; set; }
 
-        [FromForm(Name = "total-amount")]
+        [JsonPropertyName("total-amount")]
         [Required(ErrorMessage = "Total Amount is required")]
         public decimal TotalAmount { get; set; }
 
-        [FromForm(Name = "address")]
+        [JsonPropertyName("address")]
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
-        [FromForm(Name = "payment-method-id")]
+        [JsonPropertyName("payment-method-id")]
         public int PaymentMethodId { get; set; }
 
-        [FromForm(Name = "order-details")]
+        [JsonPropertyName("order-details")]
         public ICollection<UpdateOrderDetailRequest> OrderDetails { get; set; }
     }
 
@@ -65,28 +65,28 @@ namespace MagicalProduct.API.Payload.Request
 
     public class CreateOrderDetailRequest
     {
-        [FromForm(Name = "product-id")]
+        [JsonPropertyName("product-id")]
         public string ProductId { get; set; }
 
-        [FromForm(Name = "amount")]
+        [JsonPropertyName("amount")]
         public decimal Amount { get; set; }
 
-        [FromForm(Name = "quantity")]
+        [JsonPropertyName("quantity")]
         public int Quantity { get; set; }
     }
 
     public class UpdateOrderDetailRequest
     {
-        [FromForm(Name = "id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [FromForm(Name = "product-id")]
+        [JsonPropertyName("product-id")]
         public string ProductId { get; set; }
 
-        [FromForm(Name = "amount")]
+        [JsonPropertyName("amount")]
         public decimal Amount { get; set; }
 
-        [FromForm(Name = "quantity")]
+        [JsonPropertyName("quantity")]
         public int Quantity { get; set; }
     }
 }

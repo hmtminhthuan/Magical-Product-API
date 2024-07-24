@@ -10,8 +10,7 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class UserService : BaseService<UserService>, IUserService
     {
-        public UserService(IUnitOfWork unitOfWork, ILogger<UserService> logger, IMapper mapper,
-            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        public UserService(IUnitOfWork unitOfWork, ILogger<UserService> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -58,7 +57,7 @@ namespace MagicalProduct.API.Services.Implements
                 IsSuccess = true,
                 Message = "Get all users successfully",
                 StatusCode = StatusCodes.Status200OK,
-                Result = users.Select(u => new NewsResponse
+                Result = users.Select(u => new UserResponse
                 {
                     Id = u.Id,
                     Name = u.Name,
@@ -91,7 +90,7 @@ namespace MagicalProduct.API.Services.Implements
                 IsSuccess = true,
                 Message = "Get user by ID successfully",
                 StatusCode = StatusCodes.Status200OK,
-                Result = new NewsResponse
+                Result = new UserResponse
                 {
                     Id = user.Id,
                     Name = user.Name,
@@ -128,7 +127,7 @@ namespace MagicalProduct.API.Services.Implements
                 Name = createUserRequest.Name,
                 Phone = createUserRequest.Phone,
                 Email = createUserRequest.Email,
-                Password = createUserRequest.Password,
+                Password = PasswordUtil.HashPassword(createUserRequest.Password),
                 Gender = createUserRequest.Gender,
                 Status = createUserRequest.Status,
                 RoleId = createUserRequest.RoleId
@@ -142,7 +141,7 @@ namespace MagicalProduct.API.Services.Implements
                 IsSuccess = true,
                 Message = "Create new user successfully",
                 StatusCode = StatusCodes.Status201Created,
-                Result = new NewsResponse
+                Result = new UserResponse
                 {
                     Id = newUser.Id,
                     Name = newUser.Name,
@@ -187,7 +186,7 @@ namespace MagicalProduct.API.Services.Implements
             user.Name = updateUserRequest.Name;
             user.Phone = updateUserRequest.Phone;
             user.Email = updateUserRequest.Email;
-            user.Password = updateUserRequest.Password;
+            user.Password = PasswordUtil.HashPassword(updateUserRequest.Password);
             user.Gender = updateUserRequest.Gender;
             user.Status = updateUserRequest.Status;
             user.RoleId = updateUserRequest.RoleId;
@@ -200,7 +199,7 @@ namespace MagicalProduct.API.Services.Implements
                 IsSuccess = true,
                 Message = "Update user successfully",
                 StatusCode = StatusCodes.Status200OK,
-                Result = new NewsResponse
+                Result = new UserResponse
                 {
                     Id = user.Id,
                     Name = user.Name,
@@ -228,7 +227,8 @@ namespace MagicalProduct.API.Services.Implements
                 };
             }
 
-            _unitOfWork.UserRepository.Delete(id);
+            user.Status = false;
+            _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.SaveAsync();
 
             var response = new BasicResponse
