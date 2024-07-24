@@ -11,6 +11,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private IGenericRepository<Order> orderRepository;
     private IGenericRepository<OrderDetail> orderDetailRepository;
     private IGenericRepository<PaymentMethod> paymentMethodRepository;
+    private IGenericRepository<Role> roleRepository;
+    private IGenericRepository<News> newsRepository;
 
     public UnitOfWork(MagicalProductContext context)
     {
@@ -46,6 +48,22 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         get
         {
             return paymentMethodRepository ??= new GenericRepository<PaymentMethod>(context);
+        }
+    }
+
+    public IGenericRepository<Role> RoleRepository
+    {
+        get
+        {
+            return roleRepository ??= new GenericRepository<Role>(context);
+        }
+    }
+
+    public IGenericRepository<News> NewsRepository
+    {
+        get
+        {
+            return newsRepository ??= new GenericRepository<News>(context);
         }
     }
 
