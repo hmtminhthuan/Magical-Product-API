@@ -8,6 +8,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly MagicalProductContext context;
     private IGenericRepository<User> userRepository;
+    private IGenericRepository<Product> productRepository;
+    private IGenericRepository<Category> categoryRepository;
     private IGenericRepository<Order> orderRepository;
     private IGenericRepository<OrderDetail> orderDetailRepository;
     private IGenericRepository<PaymentMethod> paymentMethodRepository;
@@ -24,6 +26,20 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         get
         {
             return userRepository ??= new GenericRepository<User>(context);
+        }
+    }
+    public IGenericRepository<Product> ProductRepository
+    {
+        get
+        {
+            return productRepository ??= new GenericRepository<Product>(context);
+        }
+    }
+    public IGenericRepository<Category> CategoryRepository
+    {
+        get
+        {
+            return categoryRepository ??= new GenericRepository<Category>(context);
         }
     }
 

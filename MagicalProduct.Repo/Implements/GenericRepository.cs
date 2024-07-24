@@ -56,6 +56,7 @@ namespace MagicalProduct.Repo.Implement
         {
             return dbSet.Find(id);
         }
+        
 
         public virtual void Insert(TEntity entity)
         {
@@ -68,6 +69,7 @@ namespace MagicalProduct.Repo.Implement
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
         }
+        
 
         public virtual void Delete(TEntity entityToDelete)
         {

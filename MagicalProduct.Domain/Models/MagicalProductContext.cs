@@ -214,7 +214,6 @@ namespace MagicalProduct.API.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .HasColumnName("description");
-
                 entity.Property(e => e.ImageUrl)
                     .HasMaxLength(50)
                     .IsUnicode(false)
