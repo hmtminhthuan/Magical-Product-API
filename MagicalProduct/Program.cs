@@ -89,6 +89,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddDatabase();
 builder.Services.AddUnitOfWork();
+builder.Services.AddServices();
 builder.Services.AddJwtValidation();
 builder.Services.AddAutoMapperConfiguration();
 var app = builder.Build();

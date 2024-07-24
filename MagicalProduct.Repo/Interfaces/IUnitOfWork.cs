@@ -7,6 +7,11 @@ namespace MagicalProduct.Repo.Interfaces
         IGenericRepository<User> UserRepository { get; }
         IGenericRepository<Product> ProductRepository { get; }
         IGenericRepository<Category> CategoryRepository { get; }
+        IGenericRepository<Order> OrderRepository { get; }
+        IGenericRepository<OrderDetail> OrderDetailRepository { get; }
+        IGenericRepository<PaymentMethod> PaymentMethodRepository { get; }
+        IGenericRepository<Role> RoleRepository { get; }
+        IGenericRepository<News> NewsRepository { get; }
         void Save();
         Task SaveAsync();
 

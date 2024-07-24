@@ -6,6 +6,7 @@ using MagicalProduct.API.Payload.Request;
 
 namespace SE171030.Lab03ProductManagement.API.Controllers
 {
+    [Route("/api/v1/auth")]
     [ApiController]
     public class AuthenticationController : BaseController<AuthenticationController>
     {
@@ -16,7 +17,7 @@ namespace SE171030.Lab03ProductManagement.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        public async Task<IActionResult> Login(ProductRequest loginRequest)
         {
             var loginResponse = await _userService.Login(loginRequest);
             return new ObjectResult(loginResponse) { StatusCode = StatusCodes.Status200OK };
