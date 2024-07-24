@@ -9,16 +9,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagicalProduct.API.Models;
 using MagicalProduct.API.Services.Interfaces;
+using AutoMapper;
 
 namespace MagicalProduct.API.Services.Implements
 {
-    public class OrderService : IOrderService
+    public class OrderService : BaseService<OrderService>, IOrderService
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public OrderService(IUnitOfWork unitOfWork)
+        public OrderService(IUnitOfWork unitOfWork, ILogger<OrderService> logger, IMapper mapper,
+            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
         {
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<BasicResponse> GetAllOrdersAsync()

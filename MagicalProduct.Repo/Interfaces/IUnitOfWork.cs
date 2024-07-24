@@ -8,6 +8,8 @@ namespace MagicalProduct.Repo.Interfaces
         IGenericRepository<Order> OrderRepository { get; }
         IGenericRepository<OrderDetail> OrderDetailRepository { get; }
         IGenericRepository<PaymentMethod> PaymentMethodRepository { get; }
+        IGenericRepository<Role> RoleRepository { get; }
+        IGenericRepository<News> NewsRepository { get; }
 
         void Save();
         Task SaveAsync();
