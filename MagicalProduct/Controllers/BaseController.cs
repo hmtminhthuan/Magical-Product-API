@@ -2,7 +2,6 @@
 
 namespace MagicalProduct.API.Controllers
 {
-	[Route("/api/v1")]
 	[ApiController]
 	public class BaseController<T> : ControllerBase where T : BaseController<T>
 	{

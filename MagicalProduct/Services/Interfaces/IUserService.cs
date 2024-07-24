@@ -5,6 +5,6 @@ namespace MagicalProduct.API.Services.Interfaces
 {
 	public interface IUserService
 	{
-		Task<BasicResponse> Login(LoginRequest loginRequest);
+		Task<BasicResponse> Login(ProductRequest loginRequest);
 	}
 }
