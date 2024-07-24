@@ -1,4 +1,7 @@
-﻿namespace MagicalProduct.API.Payload.Request
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+
+namespace MagicalProduct.API.Payload.Request
 {
     public class CreateNewsRequest
     {

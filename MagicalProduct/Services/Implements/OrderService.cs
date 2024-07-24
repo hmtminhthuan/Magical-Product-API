@@ -15,8 +15,7 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class OrderService : BaseService<OrderService>, IOrderService
     {
-        public OrderService(IUnitOfWork unitOfWork, ILogger<OrderService> logger, IMapper mapper,
-            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        public OrderService(IUnitOfWork unitOfWork, ILogger<OrderService> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -112,23 +111,41 @@ namespace MagicalProduct.API.Services.Implements
                 };
             }
 
+            var lastOrder = _unitOfWork.OrderRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                .FirstOrDefault();
+
             var newOrder = new Order
             {
+                Id = lastOrder == null ? 1 : lastOrder.Id + 1,
                 UserId = createOrderRequest.UserId,
                 TotalAmount = createOrderRequest.TotalAmount,
                 Address = createOrderRequest.Address,
                 Status = (int)OrderStatusEnum.New,
                 CreateAt = DateTime.UtcNow,
-                PaymentMethodId = createOrderRequest.PaymentMethodId,
-                OrderDetails = createOrderRequest.OrderDetails.Select(od => new OrderDetail
-                {
-                    ProductId = od.ProductId,
-                    Amount = od.Amount,
-                    Quantity = od.Quantity
-                }).ToList()
+                PaymentMethodId = createOrderRequest.PaymentMethodId
             };
 
             _unitOfWork.OrderRepository.Insert(newOrder);
+            await _unitOfWork.SaveAsync();
+
+            foreach (var od in createOrderRequest.OrderDetails)
+            {
+                var lastOrderDetail = _unitOfWork.OrderDetailRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                    .FirstOrDefault();
+
+                var newOrderDetail = new OrderDetail
+                {
+                    Id = lastOrderDetail == null ? 1 : lastOrderDetail.Id + 1,
+                    OrderId = newOrder.Id,
+                    ProductId = od.ProductId,
+                    Amount = od.Amount,
+                    Quantity = od.Quantity
+                };
+
+                _unitOfWork.OrderDetailRepository.Insert(newOrderDetail);
+                await _unitOfWork.SaveAsync();
+            }
+
             await _unitOfWork.SaveAsync();
 
             var response = new BasicResponse
@@ -206,17 +223,24 @@ namespace MagicalProduct.API.Services.Implements
                     existingDetail.ProductId = od.ProductId;
                     existingDetail.Amount = od.Amount;
                     existingDetail.Quantity = od.Quantity;
+                    _unitOfWork.OrderDetailRepository.Update(existingDetail);
+                    await _unitOfWork.SaveAsync();
                 }
                 else
                 {
+                    var lastOrderDetail = _unitOfWork.OrderDetailRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                        .FirstOrDefault();
+
                     var newDetail = new OrderDetail
                     {
+                        Id = lastOrderDetail == null ? 1 : lastOrderDetail.Id + 1,
+                        OrderId = order.Id,
                         ProductId = od.ProductId,
                         Amount = od.Amount,
-                        Quantity = od.Quantity,
-                        OrderId = order.Id
+                        Quantity = od.Quantity
                     };
                     _unitOfWork.OrderDetailRepository.Insert(newDetail);
+                    await _unitOfWork.SaveAsync();
                 }
             }
 

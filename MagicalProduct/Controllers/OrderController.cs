@@ -36,8 +36,8 @@ namespace MagicalProduct.API.Controllers
         }
 
         [HttpPost]
-        [AuthorizePolicy(RoleEnum.Admin, RoleEnum.Staff)]
-        public async Task<IActionResult> CreateOrder([FromForm] CreateOrderRequest createOrderRequest)
+        //[AuthorizePolicy(RoleEnum.Admin, RoleEnum.Staff)]
+        public async Task<IActionResult> CreateOrder(CreateOrderRequest createOrderRequest)
         {
             var response = await _orderService.CreateOrderAsync(createOrderRequest);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
@@ -45,7 +45,7 @@ namespace MagicalProduct.API.Controllers
 
         [HttpPut("{id}")]
         [AuthorizePolicy(RoleEnum.Admin, RoleEnum.Staff)]
-        public async Task<IActionResult> UpdateOrder(int id, [FromForm] UpdateOrderRequest updateOrderRequest)
+        public async Task<IActionResult> UpdateOrder(int id, UpdateOrderRequest updateOrderRequest)
         {
             updateOrderRequest.Id = id;
             var response = await _orderService.UpdateOrderAsync(updateOrderRequest);
@@ -54,7 +54,7 @@ namespace MagicalProduct.API.Controllers
 
         [HttpPatch("update-status")]
         [AuthorizePolicy(RoleEnum.Admin, RoleEnum.Staff)]
-        public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderStatusRequest updateOrderStatusRequest)
+        public async Task<IActionResult> UpdateOrderStatus(UpdateOrderStatusRequest updateOrderStatusRequest)
         {
             var response = await _orderService.UpdateOrderStatusAsync(updateOrderStatusRequest);
             return new ObjectResult(response) { StatusCode = response.StatusCode };

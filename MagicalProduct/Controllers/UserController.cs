@@ -34,8 +34,8 @@ namespace MagicalProduct.API.Controllers
         }
 
         [HttpPost]
-        [AuthorizePolicy(RoleEnum.Admin)]
-        public async Task<IActionResult> CreateUser([FromForm] CreateUserRequest createUserRequest)
+        //[AuthorizePolicy(RoleEnum.Admin)]
+        public async Task<IActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
             var response = await _userService.CreateUserAsync(createUserRequest);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
@@ -43,7 +43,7 @@ namespace MagicalProduct.API.Controllers
 
         [HttpPut("{id}")]
         [AuthorizePolicy(RoleEnum.Admin)]
-        public async Task<IActionResult> UpdateUser(string id, [FromForm] UpdateUserRequest updateUserRequest)
+        public async Task<IActionResult> UpdateUser(string id, UpdateUserRequest updateUserRequest)
         {
             updateUserRequest.Id = id;
             var response = await _userService.UpdateUserAsync(updateUserRequest);

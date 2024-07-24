@@ -8,53 +8,53 @@ using MagicalProduct.API.Middlewares;
 namespace MagicalProduct.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/news")]
-    public class NewsController : BaseController<NewsController>
+    [Route("api/v1/roles")]
+    public class RoleController : BaseController<RoleController>
     {
-        private readonly INewsService _newsService;
+        private readonly IRoleService _roleService;
 
-        public NewsController(ILogger<NewsController> logger, INewsService newsService)
+        public RoleController(ILogger<RoleController> logger, IRoleService roleService)
             : base(logger)
         {
-            _newsService = newsService;
+            _roleService = roleService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllNews()
+        public async Task<IActionResult> GetAllRoles()
         {
-            var response = await _newsService.GetAllNewsAsync();
+            var response = await _roleService.GetAllRolesAsync();
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetNewsById(int id)
+        public async Task<IActionResult> GetRoleById(int id)
         {
-            var response = await _newsService.GetNewsByIdAsync(id);
+            var response = await _roleService.GetRoleByIdAsync(id);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
         [HttpPost]
         [AuthorizePolicy(RoleEnum.Admin)]
-        public async Task<IActionResult> CreateNews(CreateNewsRequest createNewsRequest)
+        public async Task<IActionResult> CreateRole(CreateRoleRequest createRoleRequest)
         {
-            var response = await _newsService.CreateNewsAsync(createNewsRequest);
+            var response = await _roleService.CreateRoleAsync(createRoleRequest);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
         [HttpPut("{id}")]
         [AuthorizePolicy(RoleEnum.Admin)]
-        public async Task<IActionResult> UpdateNews(int id, UpdateNewsRequest updateNewsRequest)
+        public async Task<IActionResult> UpdateRole(int id, UpdateRoleRequest updateRoleRequest)
         {
-            updateNewsRequest.Id = id;
-            var response = await _newsService.UpdateNewsAsync(updateNewsRequest);
+            updateRoleRequest.Id = id;
+            var response = await _roleService.UpdateRoleAsync(updateRoleRequest);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
 
         [HttpDelete("{id}")]
         [AuthorizePolicy(RoleEnum.Admin)]
-        public async Task<IActionResult> DeleteNews(int id)
+        public async Task<IActionResult> DeleteRole(int id)
         {
-            var response = await _newsService.DeleteNewsAsync(id);
+            var response = await _roleService.DeleteRoleAsync(id);
             return new ObjectResult(response) { StatusCode = response.StatusCode };
         }
     }

@@ -1,10 +1,6 @@
 ﻿using MagicalProduct.Repo.Interfaces;
-using MagicalProduct.Repo.Models;
 using MagicalProduct.API.Payload.Request;
 using MagicalProduct.API.Payload.Response;
-using MagicalProduct.API.Utils;
-using System.Linq;
-using System.Threading.Tasks;
 using MagicalProduct.API.Models;
 using MagicalProduct.API.Services.Interfaces;
 using AutoMapper;
@@ -13,8 +9,7 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class NewsService : BaseService<NewsService>, INewsService
     {
-        public NewsService(IUnitOfWork unitOfWork, ILogger<NewsService> logger, IMapper mapper,
-            IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        public NewsService(IUnitOfWork unitOfWork, ILogger<NewsService> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -68,8 +63,11 @@ namespace MagicalProduct.API.Services.Implements
 
         public async Task<BasicResponse> CreateNewsAsync(CreateNewsRequest createNewsRequest)
         {
+            var lastItem = _unitOfWork.NewsRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                .FirstOrDefault(); 
             var newNews = new News
             {
+                Id = lastItem == null ? 1 : lastItem.Id + 1,
                 Title = createNewsRequest.Title,
                 Thumbnail = createNewsRequest.Thumbnail,
                 Content = createNewsRequest.Content
