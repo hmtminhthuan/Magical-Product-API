@@ -7,11 +7,17 @@ using MagicalProduct.Repo.Interfaces;
 using MagicalProduct.API.Constants;
 using System.Collections;
 using MagicalProduct.API.Models;
+using MagicalProduct.API.Mappers.Products;
 
 namespace MagicalProduct.API.Extensions;
 
 public static class DependencyInjection
 {
+    public static IServiceCollection AddAutoMapperConfiguration(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(MappingProfile));
+        return services;
+    }
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();

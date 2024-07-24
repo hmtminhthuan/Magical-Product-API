@@ -211,9 +211,7 @@ namespace MagicalProduct.API.Models
                     .HasMaxLength(255)
                     .HasColumnName("description");
 
-                entity.Property(e => e.Discount)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("discount");
+               
 
                 entity.Property(e => e.ImageUrl)
                     .HasMaxLength(50)
