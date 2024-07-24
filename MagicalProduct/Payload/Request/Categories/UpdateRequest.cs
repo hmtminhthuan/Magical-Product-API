@@ -2,9 +2,9 @@
 
 namespace MagicalProduct.API.Payload.Request.Categories
 {
-    public class UpdateRequest
+    public class UpdateCategoryRequest
     {
-        [Required(ErrorMessage = "Id is required")]
-        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -9,8 +9,9 @@ namespace MagicalProduct.API.Mappers.Categories
         public MappingProfile()
         {
             CreateMap<Category, GetRequest>();         
-            CreateMap<CreateRequest, Category>();
-            CreateMap<Category, UpdateRequest>();
+            CreateMap<CreateCategoryRequest, Category>();
+            CreateMap<Category, UpdateCategoryRequest>();
+            CreateMap<UpdateCategoryRequest, Category>();
         }
     }
 }

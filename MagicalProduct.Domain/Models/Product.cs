@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MagicalProduct.API.Models
 {
@@ -17,8 +18,10 @@ namespace MagicalProduct.API.Models
         public string? ImageUrl { get; set; }
         public int? CategoryId { get; set; }
         public bool? Status { get; set; }
+        [JsonIgnore]
 
         public virtual Category? Category { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
