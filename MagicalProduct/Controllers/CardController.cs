@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MagicalProduct.API.Controllers
 {
     [ApiController]
-    [Route("api/cards")]
+    [Route("api/v1/cards")]
     public class CardController : BaseController<CardController>
     {
         private readonly ICardService _cardService;

@@ -11,8 +11,11 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class PaymentService : BaseService<PaymentService>, IPaymentService
     {
-        public PaymentService(IUnitOfWork unitOfWork, ILogger<PaymentService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        private readonly IMapper _mapper;
+
+        public PaymentService(IUnitOfWork unitOfWork, ILogger<PaymentService> logger, IMapper mapper) : base(unitOfWork, logger)
         {
+            _mapper = mapper;
         }
 
         public async Task<BasicResponse> GetPaymentMethods(string? type)
@@ -33,7 +36,7 @@ namespace MagicalProduct.API.Services.Implements
             var res = new BasicResponse
             {
                 IsSuccess = true,
-                Message = "Login successfully",
+                Message = "Get all payment methods successfully",
                 StatusCode = StatusCodes.Status200OK,
                 Result = responses.ToArray()
             };
@@ -59,9 +62,10 @@ namespace MagicalProduct.API.Services.Implements
 
         public async Task<BasicResponse> CreatePaymentMethod(PaymentReq request)
         {
-            int id = _unitOfWork.PaymentMethodRepository.GetMaxId();
+            var lastItem = _unitOfWork.PaymentMethodRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                .FirstOrDefault();
             PaymentMethod p = new PaymentMethod();
-            p.Id = id + 1;
+            p.Id = lastItem == null ? 1 : lastItem.Id + 1;
             p.PaymentType = request.PaymentType;
             _unitOfWork.PaymentMethodRepository.Insert(p);
             _unitOfWork.Save();

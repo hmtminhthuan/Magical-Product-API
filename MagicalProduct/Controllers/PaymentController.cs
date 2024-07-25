@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MagicalProduct.API.Controllers
 {
     [ApiController]
-    [Route("api/payment-methods")]
+    [Route("api/v1/payment-methods")]
     public class PaymentController : BaseController<PaymentController>
     {
         private readonly IPaymentService _paymentService;

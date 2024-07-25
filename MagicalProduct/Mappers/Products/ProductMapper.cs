@@ -4,9 +4,9 @@ using MagicalProduct.API.Payload.Request.Products;
 
 namespace MagicalProduct.API.Mappers.Products
 {
-    public class MappingProfile : Profile
+    public class ProductMapper : Profile
     {
-        public MappingProfile()
+        public ProductMapper()
         {
             CreateMap<Product, GetRequest>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));

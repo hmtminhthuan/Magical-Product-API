@@ -55,6 +55,8 @@ public static class DependencyInjection
         services.AddScoped<INewsService, NewsService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<ICardService, CardService>();
         return services;
     }
 
