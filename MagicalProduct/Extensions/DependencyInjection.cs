@@ -8,6 +8,10 @@ using MagicalProduct.API.Constants;
 using System.Collections;
 using MagicalProduct.API.Models;
 using MagicalProduct.API.Mappers;
+using MagicalProduct.API.Mappers.Products;
+using MagicalProduct.API.Services.Implements;
+using MagicalProduct.API.Services.Interfaces;
+using Microsoft.AspNetCore.Builder.Extensions;
 
 namespace MagicalProduct.API.Extensions;
 
@@ -18,7 +22,7 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(MappingProfile));
         return services;
     }
-
+  
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -41,6 +45,17 @@ public static class DependencyInjection
         var strConn = config["ConnectionStrings:MyConnectionString"];
 
         return strConn;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<INewsService, NewsService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        return services;
     }
 
     public static IServiceCollection AddJwtValidation(this IServiceCollection services)

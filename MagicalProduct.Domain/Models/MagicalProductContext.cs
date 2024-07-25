@@ -122,6 +122,10 @@ namespace MagicalProduct.API.Models
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
+                entity.Property(e => e.Address)
+                    .HasMaxLength(255)
+                    .HasColumnName("address");
+
                 entity.Property(e => e.CreateAt)
                     .HasColumnType("datetime")
                     .HasColumnName("create_at");
@@ -210,11 +214,6 @@ namespace MagicalProduct.API.Models
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .HasColumnName("description");
-
-                entity.Property(e => e.Discount)
-                    .HasColumnType("decimal(10, 2)")
-                    .HasColumnName("discount");
-
                 entity.Property(e => e.ImageUrl)
                     .HasMaxLength(50)
                     .IsUnicode(false)

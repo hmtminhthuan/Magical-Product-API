@@ -8,23 +8,11 @@ namespace MagicalProduct.API.Services
     {
         protected IUnitOfWork _unitOfWork;
         protected ILogger<T> _logger;
-        protected IMapper _mapper;
-        protected IHttpContextAccessor _httpContextAccessor;
 
-        public BaseService(IUnitOfWork unitOfWork, ILogger<T> logger,
-            IMapper mapper,
-            IHttpContextAccessor httpContextAccessor)
+        public BaseService(IUnitOfWork unitOfWork, ILogger<T> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-            _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        protected string GetRoleFromJwt()
-        {
-            string role = _httpContextAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
-            return role;
         }
     }
 }

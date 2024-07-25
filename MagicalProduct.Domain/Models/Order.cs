@@ -13,6 +13,7 @@ namespace MagicalProduct.API.Models
         public int Id { get; set; }
         public string? UserId { get; set; }
         public decimal? TotalAmount { get; set; }
+        public string? Address { get; set; }
         public int? Status { get; set; }
         public DateTime? CreateAt { get; set; }
         public int? PaymentMethodId { get; set; }
