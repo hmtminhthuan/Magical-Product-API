@@ -14,8 +14,11 @@ namespace MagicalProduct.API.Services.Implements
 {
     public class CardService : BaseService<CardService>, ICardService
     {
-        public CardService(IUnitOfWork unitOfWork, ILogger<CardService> logger, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        private readonly IMapper _mapper;
+
+        public CardService(IUnitOfWork unitOfWork, ILogger<CardService> logger, IMapper mapper) : base(unitOfWork, logger)
         {
+            _mapper = mapper;
         }
 
         public BasicResponse Get(string? name, string? cardNum)
@@ -65,7 +68,9 @@ namespace MagicalProduct.API.Services.Implements
         public async Task<BasicResponse> Create(CardReq req)
         {
             var card = _mapper.Map<Card>(req);
-            card.Id = _unitOfWork.CardRepository.GetMaxId() + 1;
+            var lastItem = _unitOfWork.CardRepository.Get(orderBy: item => item.OrderByDescending(item => item.Id))
+                .FirstOrDefault();
+            card.Id = lastItem == null ? 1 : lastItem.Id + 1;
             card.User = _unitOfWork.UserRepository
                 .Get(filter: p => p.Id == req.UserId).FirstOrDefault();
             card.PaymentMethod = _unitOfWork.PaymentMethodRepository

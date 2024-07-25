@@ -4,9 +4,9 @@ using MagicalProduct.API.Payload.Request.Categories;
 
 namespace MagicalProduct.API.Mappers.Categories
 {
-    public class MappingProfile : Profile
+    public class CategoryMapper : Profile
     {
-        public MappingProfile()
+        public CategoryMapper()
         {
             CreateMap<Category, GetRequest>();         
             CreateMap<CreateCategoryRequest, Category>();
