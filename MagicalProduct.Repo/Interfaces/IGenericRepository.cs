@@ -20,5 +20,6 @@ namespace MagicalProduct.Repo.Interfaces
         void Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToUpdate);
+        int GetMaxId();
     }
 }

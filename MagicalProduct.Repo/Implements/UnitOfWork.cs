@@ -1,4 +1,4 @@
-﻿using MagicalProduct.API.Models;
+using MagicalProduct.API.Models;
 using MagicalProduct.Repo.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,14 +8,15 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly MagicalProductContext context;
     private IGenericRepository<User> userRepository;
+    private IGenericRepository<PaymentMethod> paymentMethodRepository;
+    private IGenericRepository<Card> cardRepository;
     private IGenericRepository<Product> productRepository;
     private IGenericRepository<Category> categoryRepository;
     private IGenericRepository<Order> orderRepository;
     private IGenericRepository<OrderDetail> orderDetailRepository;
-    private IGenericRepository<PaymentMethod> paymentMethodRepository;
     private IGenericRepository<Role> roleRepository;
     private IGenericRepository<News> newsRepository;
-
+    
     public UnitOfWork(MagicalProductContext context)
     {
         this.context = context;
@@ -59,14 +60,6 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         }
     }
 
-    public IGenericRepository<PaymentMethod> PaymentMethodRepository
-    {
-        get
-        {
-            return paymentMethodRepository ??= new GenericRepository<PaymentMethod>(context);
-        }
-    }
-
     public IGenericRepository<Role> RoleRepository
     {
         get
@@ -80,6 +73,22 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         get
         {
             return newsRepository ??= new GenericRepository<News>(context);
+        }
+    }
+
+    public IGenericRepository<PaymentMethod> PaymentMethodRepository
+    {
+        get
+        {
+            return paymentMethodRepository ??= new GenericRepository<PaymentMethod>(context);
+        }
+    }
+
+    public IGenericRepository<Card> CardRepository
+    {
+        get
+        {
+            return cardRepository ??= new GenericRepository<Card>(context);
         }
     }
 

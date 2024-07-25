@@ -51,6 +51,18 @@ namespace MagicalProduct.Repo.Implement
 
             return query.ToList();
         }
+        public int GetMaxId()
+        {
+            var property = typeof(TEntity).GetProperty("Id");
+            if (property == null)
+            {
+                throw new InvalidOperationException("Entity does not have an 'Id' property.");
+            }
+
+            var maxId = (int)dbSet.Max(entity => property.GetValue(entity));
+            return maxId;
+        }
+
 
         public virtual TEntity GetByID(object id)
         {

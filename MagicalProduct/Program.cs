@@ -48,9 +48,8 @@ builder.Services
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
-{
-    //var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    //options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Version = "v1",
@@ -91,7 +90,8 @@ builder.Services.AddDatabase();
 builder.Services.AddUnitOfWork();
 builder.Services.AddServices();
 builder.Services.AddJwtValidation();
-builder.Services.AddAutoMapperConfiguration();
+builder.Services.AddMapper();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
